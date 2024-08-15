@@ -44,9 +44,8 @@ document.querySelectorAll("button").forEach((button) => {
                 setTimeout(allClear, 2000);
             }
             else if (num1 && num2 && operator) {
-                if (num1.includes(".") || num2.includes(".")) {
-                    Math.round(myNumber * 100) / 100;
-                }
+                num1.includes(".") ? Math.round(num1 * 100) / 100 : num1;
+                num2.includes(".") ? Math.round(num2 * 100) / 100 : num2;
 
                 num1 = parseFloat(num1);
                 num2 = parseFloat(num2);
@@ -68,8 +67,8 @@ document.querySelectorAll("button").forEach((button) => {
             display.textContent += ".";
         }
 
-        if (buttonText == "%") {
-            display.textContent += ".";
+        if (buttonText == "%" && display.textContent) {
+            display.textContent = percentage(display.textContent);
         }
     })
 });
@@ -79,6 +78,10 @@ function allClear() {
     num1 = undefined;
     num2 = undefined;
     operator = undefined;
+}
+
+function percentage(num) {
+    return num.replace(/\%/g, "") / 100;
 }
 
 
