@@ -4,7 +4,7 @@ let num2;
 
 let displayValue;
 
-const display = document.querySelector(".display");
+const display = document.querySelector(".result");
 
 document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (event) => {
