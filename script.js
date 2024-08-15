@@ -12,7 +12,7 @@ document.querySelectorAll("button").forEach((button) => {
         let buttonClass = event.target.className;
 
         if (buttonClass == "num") {
-            if (num1) {
+            if (num1 && !operator) {
                 operator = display.textContent;
                 display.textContent = "";
             }
@@ -20,7 +20,9 @@ document.querySelectorAll("button").forEach((button) => {
         }
 
         if (buttonClass == "op") {
-            num1 = display.textContent;
+            if (!num1) {
+                num1 = display.textContent;
+            }
 
             display.textContent = "";
             display.textContent += buttonText;
@@ -31,27 +33,53 @@ document.querySelectorAll("button").forEach((button) => {
         }
 
         if (buttonText == "AC") {
-            display.textContent = "";
-            
-            num1 = undefined;
-            num2 = undefined;
-            operator = undefined;
+            allClear();
         }
 
         if (buttonText == "=") {
             num2 = display.textContent;
 
-            if (num1 && num2 && operator) {
-                console.log("Here!");
-
-                num1 = parseInt(num1);
-                num2 = parseInt(num2);
-
-                console.log(display.textContent = operate(num1, operator, num2));
+            if ((num1 == 0 || num2 == 0) && operator == "÷") {
+                display.textContent = "MATH ERROR";
+                setTimeout(allClear, 2000);
             }
+            else if (num1 && num2 && operator) {
+                if (num1.includes(".") || num2.includes(".")) {
+                    Math.round(myNumber * 100) / 100;
+                }
+
+                num1 = parseFloat(num1);
+                num2 = parseFloat(num2);
+                operator = operator.replace(/\./g, "");
+
+
+                display.textContent = operate(num1, operator, num2);
+                
+                num1 = display.textContent;
+                operator = undefined;
+                num2 = undefined;
+            }
+            else {
+                display.textContent = "SYNTAX ERROR";
+            }
+        }
+
+        if (buttonText == "." && !display.textContent.includes("."))  {
+            display.textContent += ".";
+        }
+
+        if (buttonText == "%") {
+            display.textContent += ".";
         }
     })
 });
+
+function allClear() {
+    display.textContent = "";
+    num1 = undefined;
+    num2 = undefined;
+    operator = undefined;
+}
 
 
 function operate(num1, operator, num2) {
@@ -62,8 +90,8 @@ function operate(num1, operator, num2) {
             return subtract(num1, num2);
         case "×":
             return multiply(num1, num2);
-        case "/":
-            return divide(a, b);
+        case "÷":
+            return divide(num1, num2);
     }
 };
 
@@ -80,5 +108,5 @@ function multiply(a, b) {
 };
 
 function divide(a, b) {
-    return a * b;
+    return a / b;
 };
