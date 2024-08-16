@@ -6,13 +6,32 @@
     padding: 10% 0px;;
 }
 
-.display {
+.operationBox {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #f0f0f0;
+    padding: 10px 0px;
+    width: 293px;
+    max-width: 100%;
+    height: 10px;
+    max-height: 100%;
+}
+
+.operation {
+    padding: 0px 20px;
     font-family: "Noto Sans Math", sans-serif;
+    font-size: 12px;
+    opacity: 50%;
+}
+
+.display {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     background-color: #f0f0f0;
     padding: 30px 0px;
+    padding-top: 10px;
     margin-bottom: 20px;
     width: 293px;
     max-width: 100%;
@@ -22,6 +41,7 @@
 
 .result {
     padding: 20px;
+    font-family: "Noto Sans Math", sans-serif;
     font-size: 30px;
 }
 

@@ -5,6 +5,7 @@ let num2;
 let displayValue;
 
 const display = document.querySelector(".result");
+const operation = document.querySelector(".operation");
 
 document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (event) => {
@@ -16,12 +17,21 @@ document.querySelectorAll("button").forEach((button) => {
                 operator = display.textContent;
                 display.textContent = "";
             }
+
             display.textContent += buttonText;
         }
 
         if (buttonClass == "op") {
             if (!num1) {
                 num1 = display.textContent;
+            }
+            if (num1 && operator) {
+                num2 = display.textContent;
+                display.textContent = calculate(num1, num2, operator);
+
+                num1 = display.textContent;
+                operator = undefined;
+                num2 = undefined;
             }
 
             display.textContent = "";
@@ -44,15 +54,7 @@ document.querySelectorAll("button").forEach((button) => {
                 setTimeout(allClear, 2000);
             }
             else if (num1 && num2 && operator) {
-                num1.includes(".") ? Math.round(num1 * 100) / 100 : num1;
-                num2.includes(".") ? Math.round(num2 * 100) / 100 : num2;
-
-                num1 = parseFloat(num1);
-                num2 = parseFloat(num2);
-                operator = operator.replace(/\./g, "");
-
-
-                display.textContent = operate(num1, operator, num2);
+                display.textContent = calculate(num1, num2, operator);
                 
                 num1 = display.textContent;
                 operator = undefined;
@@ -70,8 +72,24 @@ document.querySelectorAll("button").forEach((button) => {
         if (buttonText == "%" && display.textContent) {
             display.textContent = percentage(display.textContent);
         }
+
+        operation.textContent = num1 ? num1 : "";
+        operation.textContent += num2 ? num2 : "";
+        operation.textContent += operator ? operator : "";
+        
     })
 });
+
+function calculate(num1, num2, operator) {
+    num1.includes(".") ? Math.round(num1 * 100) / 100 : num1;
+    num2.includes(".") ? Math.round(num2 * 100) / 100 : num2;
+
+    num1 = parseFloat(num1);
+    num2 = parseFloat(num2);
+    operator = operator.replace(/\./g, "");
+
+    return operate(num1, operator, num2);
+}
 
 function allClear() {
     display.textContent = "";
